@@ -22,7 +22,9 @@ public class ViaCepService {
 
     public ViaCepService() {
         this.client = HttpClient.newHttpClient();
-        this.gson = new GsonBuilder().create();
+        this.gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
     }
 
     public Address searchByCep(String cep) throws IOException, InterruptedException {
@@ -49,7 +51,8 @@ public class ViaCepService {
     public List<Address> searchByStreet(String uf, String city, String street) throws IOException, InterruptedException {
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + uf + "/" + city + "/" + street + "/json/"))
+                .uri(URI.create(BASE_URL + uf + "/" + city.replace(" ", "+")
+                        + "/" + street.replace(" ", "+") + "/json/"))
                 .GET()
                 .build();
 
@@ -62,6 +65,8 @@ public class ViaCepService {
         if (records == null || records.length == 0) {
             throw new InvalidCepException("Nenhum endereço encontrado.");
         }
+
+        //return gson.toJson(records);
 
         return Arrays.stream(records)
                 .map(Address::new)
