@@ -66,8 +66,6 @@ public class ViaCepService {
             throw new InvalidCepException("Nenhum endereço encontrado.");
         }
 
-        //return gson.toJson(records);
-
         return Arrays.stream(records)
                 .map(Address::new)
                 .collect(Collectors.toList());
