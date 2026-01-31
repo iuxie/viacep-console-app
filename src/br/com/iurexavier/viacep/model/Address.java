@@ -46,7 +46,6 @@ public class Address {
     @Override
     public String toString() {
         return this.street + ", " + this.neighborhood + " - " + this.city + ", "
-                + this.uf + " (" + this.cep.substring(0,5) + "-" +
-                this.cep.substring(5,8)+")";
+                + this.uf + " (" + this.cep + ")";
     }
 }
